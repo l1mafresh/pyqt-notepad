@@ -1,3 +1,5 @@
+import platform
+import os
 from PyQt6 import QtWidgets, QtCore, QtGui
 from PyQt6.QtWidgets import QApplication, QMainWindow, QTextEdit, QStatusBar, QMenuBar, QMenu, QFileDialog, QFontDialog, QMessageBox
 
@@ -7,9 +9,12 @@ class Window(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("PyQt Notepad")
+        self.setWindowTitle("Notepad")
         self.resize(640,480)
-        self.setWindowIcon(QtGui.QIcon.fromTheme(u"accessories-text-editor"))
+        if platform.system() == "Linux":
+            self.setWindowIcon(QtGui.QIcon.fromTheme(u"accessories-text-editor"))
+        else:
+            self.setWindowIcon(QtGui.QIcon(os.path.join(os.path.dirname(os.path.abspath(__file__)), "icon.png")))
         
         font = QtGui.QFont()
 
