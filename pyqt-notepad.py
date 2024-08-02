@@ -1,9 +1,8 @@
-import platform
 import os
+import sys
+from platform import system
 from PyQt6 import QtWidgets, QtCore, QtGui
 from PyQt6.QtWidgets import QApplication, QMainWindow, QTextEdit, QStatusBar, QMenuBar, QMenu, QFileDialog, QFontDialog, QMessageBox
-
-import sys
 
 class Window(QMainWindow):
     def __init__(self):
@@ -11,7 +10,7 @@ class Window(QMainWindow):
 
         self.setWindowTitle("Notepad")
         self.resize(640,480)
-        if platform.system() == "Linux":
+        if system() == "Linux":
             self.setWindowIcon(QtGui.QIcon.fromTheme(u"accessories-text-editor"))
         else:
             self.setWindowIcon(QtGui.QIcon(os.path.join(os.path.dirname(os.path.abspath(__file__)), "icon.png")))
@@ -34,17 +33,21 @@ class Window(QMainWindow):
         about_menu = QMenu("&About", self)
         self.menu_bar.addMenu(about_menu)
         
-        file_menu.addAction("Open", self.action_clicked)
-        file_menu.addAction("Save", self.action_clicked)
+        open_file = file_menu.addAction("Open", self.action_clicked)
+        open_file.setIcon(QtGui.QIcon.fromTheme(u"document-open"))
+        save_file = file_menu.addAction("Save as", self.action_clicked)
+        save_file.setIcon(QtGui.QIcon.fromTheme(u"document-save-as"))
 
         view_menu.addAction("System", self.action_clicked)
         view_menu.addAction("Light", self.action_clicked)
         view_menu.addAction("Dark", self.action_clicked)
         view_menu.addAction("Sepia", self.action_clicked)
         view_menu.addSeparator()
-        view_menu.addAction("Font settings", self.action_clicked)
+        font_settings = view_menu.addAction("Font settings", self.action_clicked)
+        font_settings.setIcon(QtGui.QIcon.fromTheme(u"font-x-generic"))
 
-        about_menu.addAction("About program", self.action_clicked)
+        about = about_menu.addAction("About program", self.action_clicked)
+        about.setIcon(QtGui.QIcon.fromTheme(u"help-about"))
 
         self.char_count_label = QtWidgets.QLabel("Characters: 0", alignment=QtCore.Qt.AlignmentFlag.AlignCenter)
         self.status_bar.addWidget(self.char_count_label)
