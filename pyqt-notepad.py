@@ -68,7 +68,7 @@ class Window(QMainWindow):
                         self.text_edit.setText(data)
                 except:
                     QMessageBox.warning(self, "Error", "Unsupported file type")  
-        elif action.text() == "Save":
+        elif action.text() == "Save as":
             fname = QFileDialog.getSaveFileName(self, filter="Text Files (*.txt)")[0]
             if fname:
                 if not fname.endswith(".txt"):
