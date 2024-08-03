@@ -10,10 +10,6 @@ class Window(QMainWindow):
 
         self.setWindowTitle("Notepad")
         self.resize(640,480)
-        if system() == "Linux":
-            self.setWindowIcon(QtGui.QIcon.fromTheme(u"accessories-text-editor"))
-        else:
-            self.setWindowIcon(QtGui.QIcon(os.path.join(os.path.dirname(os.path.abspath(__file__)), "icon.png")))
         
         font = QtGui.QFont()
 
@@ -34,9 +30,7 @@ class Window(QMainWindow):
         self.menu_bar.addMenu(about_menu)
         
         open_file = file_menu.addAction("Open", self.action_clicked)
-        open_file.setIcon(QtGui.QIcon.fromTheme(u"document-open"))
         save_file = file_menu.addAction("Save as", self.action_clicked)
-        save_file.setIcon(QtGui.QIcon.fromTheme(u"document-save-as"))
 
         view_menu.addAction("System", self.action_clicked)
         view_menu.addAction("Light", self.action_clicked)
@@ -44,13 +38,20 @@ class Window(QMainWindow):
         view_menu.addAction("Sepia", self.action_clicked)
         view_menu.addSeparator()
         font_settings = view_menu.addAction("Font settings", self.action_clicked)
-        font_settings.setIcon(QtGui.QIcon.fromTheme(u"font-x-generic"))
 
         about = about_menu.addAction("About program", self.action_clicked)
-        about.setIcon(QtGui.QIcon.fromTheme(u"help-about"))
 
         self.char_count_label = QtWidgets.QLabel("Characters: 0", alignment=QtCore.Qt.AlignmentFlag.AlignCenter)
         self.status_bar.addWidget(self.char_count_label)
+
+        if system() == "Linux":
+            self.setWindowIcon(QtGui.QIcon.fromTheme(u"accessories-text-editor"))
+            open_file.setIcon(QtGui.QIcon.fromTheme(u"document-open"))
+            save_file.setIcon(QtGui.QIcon.fromTheme(u"document-save-as"))
+            font_settings.setIcon(QtGui.QIcon.fromTheme(u"font-x-generic"))
+            about.setIcon(QtGui.QIcon.fromTheme(u"help-about"))
+        else:
+            self.setWindowIcon(QtGui.QIcon(os.path.join(os.path.dirname(os.path.abspath(__file__)), "icon.png")))
 
         self.text_edit.textChanged.connect(self.update_char_count)
 
@@ -91,7 +92,7 @@ class Window(QMainWindow):
                 self.text_edit.setFont(font)
 
         elif action.text() == "About program":
-            QMessageBox.information(self, "PyQt Notepad",
+            QMessageBox.information(self, "Notepad",
                                 "Lightweight notepad, writed \non Python and PyQt6 by limafresh.")
 
     def update_char_count(self):
