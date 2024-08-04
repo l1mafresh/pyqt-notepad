@@ -2,7 +2,7 @@ import os
 import sys
 from platform import system
 from PyQt6 import QtWidgets, QtCore, QtGui
-from PyQt6.QtWidgets import QApplication, QMainWindow, QTextEdit, QStatusBar, QMenuBar, QMenu, QFileDialog, QFontDialog, QMessageBox
+from PyQt6.QtWidgets import QApplication, QMainWindow, QTextEdit, QStatusBar, QMenuBar, QMenu, QLabel, QFileDialog, QFontDialog, QMessageBox
 
 class Window(QMainWindow):
     def __init__(self):
@@ -40,10 +40,7 @@ class Window(QMainWindow):
         font_settings = view_menu.addAction("Font settings", self.action_clicked)
 
         about = about_menu.addAction("About program", self.action_clicked)
-
-        self.char_count_label = QtWidgets.QLabel("Characters: 0", alignment=QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.status_bar.addWidget(self.char_count_label)
-
+        
         if system() == "Linux":
             self.setWindowIcon(QtGui.QIcon.fromTheme(u"accessories-text-editor"))
             open_file.setIcon(QtGui.QIcon.fromTheme(u"document-open"))
@@ -52,6 +49,9 @@ class Window(QMainWindow):
             about.setIcon(QtGui.QIcon.fromTheme(u"help-about"))
         else:
             self.setWindowIcon(QtGui.QIcon(os.path.join(os.path.dirname(os.path.abspath(__file__)), "icon.png")))
+
+        self.char_count_label = QLabel("Characters: 0", alignment=QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.status_bar.addWidget(self.char_count_label)
 
         self.text_edit.textChanged.connect(self.update_char_count)
 
