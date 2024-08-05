@@ -1,6 +1,4 @@
-import os
 import sys
-from platform import system
 from PyQt6 import QtWidgets, QtCore, QtGui
 from PyQt6.QtWidgets import QApplication, QMainWindow, QTextEdit, QStatusBar, QMenuBar, QMenu, QLabel, QFileDialog, QFontDialog, QMessageBox
 
@@ -15,9 +13,6 @@ class Window(QMainWindow):
 
         self.text_edit = QTextEdit(self, font=font)
         self.setCentralWidget(self.text_edit)
-
-        self.status_bar = QStatusBar(self)
-        self.setStatusBar(self.status_bar)
         
         self.menu_bar = QMenuBar(self)
         self.setMenuBar(self.menu_bar)
@@ -41,14 +36,17 @@ class Window(QMainWindow):
 
         about = about_menu.addAction("About program", self.action_clicked)
         
-        if system() == "Linux":
+        if sys.platform.startswith("linux"):
             self.setWindowIcon(QtGui.QIcon.fromTheme(u"accessories-text-editor"))
             open_file.setIcon(QtGui.QIcon.fromTheme(u"document-open"))
             save_file.setIcon(QtGui.QIcon.fromTheme(u"document-save-as"))
             font_settings.setIcon(QtGui.QIcon.fromTheme(u"font-x-generic"))
             about.setIcon(QtGui.QIcon.fromTheme(u"help-about"))
         else:
-            self.setWindowIcon(QtGui.QIcon(os.path.join(os.path.dirname(os.path.abspath(__file__)), "icon.png")))
+            self.setWindowIcon(QtGui.QIcon("icon.png"))
+
+        self.status_bar = QStatusBar(self)
+        self.setStatusBar(self.status_bar)
 
         self.char_count_label = QLabel("Characters: 0", alignment=QtCore.Qt.AlignmentFlag.AlignCenter)
         self.status_bar.addWidget(self.char_count_label)
