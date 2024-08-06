@@ -36,11 +36,10 @@ class Window(QMainWindow):
 
         about = about_menu.addAction("About program", self.action_clicked)
         
-        if sys.platform.startswith("linux"):
+        if sys.platform == "linux":
             self.setWindowIcon(QtGui.QIcon.fromTheme(u"accessories-text-editor"))
             open_file.setIcon(QtGui.QIcon.fromTheme(u"document-open"))
             save_file.setIcon(QtGui.QIcon.fromTheme(u"document-save-as"))
-            font_settings.setIcon(QtGui.QIcon.fromTheme(u"font-x-generic"))
             about.setIcon(QtGui.QIcon.fromTheme(u"help-about"))
         else:
             self.setWindowIcon(QtGui.QIcon("icon.png"))
