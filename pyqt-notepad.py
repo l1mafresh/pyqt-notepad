@@ -8,6 +8,7 @@ class Window(QMainWindow):
 
         self.setWindowTitle("Notepad")
         self.resize(640,480)
+        self.setWindowIcon(QtGui.QIcon.fromTheme(u"accessories-text-editor"))
         
         font = QtGui.QFont()
 
@@ -35,14 +36,10 @@ class Window(QMainWindow):
         font_settings = view_menu.addAction("Font settings", self.action_clicked)
 
         about = about_menu.addAction("About program", self.action_clicked)
-        
-        if sys.platform == "linux":
-            self.setWindowIcon(QtGui.QIcon.fromTheme(u"accessories-text-editor"))
-            open_file.setIcon(QtGui.QIcon.fromTheme(u"document-open"))
-            save_file.setIcon(QtGui.QIcon.fromTheme(u"document-save-as"))
-            about.setIcon(QtGui.QIcon.fromTheme(u"help-about"))
-        else:
-            self.setWindowIcon(QtGui.QIcon("icon.png"))
+
+        open_file.setIcon(QtGui.QIcon.fromTheme(u"document-open"))
+        save_file.setIcon(QtGui.QIcon.fromTheme(u"document-save-as"))
+        about.setIcon(QtGui.QIcon.fromTheme(u"help-about"))
 
         self.status_bar = QStatusBar(self)
         self.setStatusBar(self.status_bar)
